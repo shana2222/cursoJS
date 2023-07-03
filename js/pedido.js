@@ -1,123 +1,108 @@
+// Clase Combo
+class Combo {
+  constructor(nombre, carne, cantidad, condimentos, papas) {
+    this.nombre = nombre;
+    this.carne = carne;
+    this.cantidad = cantidad;
+    this.condimentos = condimentos;
+    this.papas = papas;
+    this.subTotal = this.calcularPrecio();
+  }
+
+  calcularPrecio = () => {
+    const precioHamburguesa = 250;
+    const precioCarneExtra = 50;
+    const precioPapas = 75;
+
+    let subtotal = precioHamburguesa + this.cantidad * precioCarneExtra;
+    if (this.papas === "SI") {
+      subtotal += precioPapas;
+    }
+
+    return subtotal;
+  };
+
+  mostrarTicket = () => {
+    console.log("--- Ticket de Pedido ---");
+    console.log("Cliente:", this.nombre);
+    console.log("Tipo de carne:", this.carne);
+    console.log("Cantidad de hamburguesas:", this.cantidad);
+    console.log("Condimentos:", this.condimentos);
+    console.log("Con papas fritas:", this.papas === "SI" ? "Sí" : "No");
+    console.log("--- Fin pedido ---");
+  };
+}
+
 // Variables del pedido
+let combos = [];
 
-let nombreInput;
-let carneInput;
-let cantidadInput;
-let condimentosInput;
-let papasInput;
-let totalPedido = 0;
-let validoInput = false;
-const precioHamburguesa = 250;
-let id = 1;
-let subTotal;
-let combos;
+const pedirDatos = () => {
+  const nombreInput = prompt(`Ingrese el nombre del cliente para el combo ${combos.length + 1}`);
+  const carneInput = prompt("Ingrese el tipo de proteína que desea en la hamburguesa (250$)");
+  const cantidadInput = parseInt(prompt("Cuantas carnes desea en la hamburguesa. Cada carne tiene un extra de $50"));
+  const condimentosInput = prompt("Ingrese los condimentos deseados");
+  let papasInput;
 
-cantidadCombos(); //llamado una función
-// Se resuelve utilizando la estructura de control selectiva : if - else  y un bucle do- while
-
-function pedirDatos() {
-  // Solicitar información al usuario
-  nombreInput = prompt("Ingrese su nombre del cliente para el combo " + id);
-  carneInput = prompt(
-    "Ingrese el tipo proteina que desea en la hamburguesa, Tiene un costo de $250"
-  );
-  cantidadInput = parseInt(
-    prompt(
-      "Cuantas carnes desea en la hamburguesa. Cada carne tiene un extra de $50"
-    )
-  );
-  condimentosInput = prompt("Ingrese los condimentos deseado");
-
-  // Validar la entrada del usuario para las papas fritas
   do {
-    papasInput = prompt("Con fritas? Tiene un extra de $75");
-    papasInput = papasInput.toUpperCase();
-    if (papasInput == "SI") {
-      validoInput = true;
-    } else if (papasInput == "NO") {
-      validoInput = true;
+    papasInput = prompt("¿Con papas fritas? (SI/NO)").toUpperCase();
+    if (papasInput !== "SI" && papasInput !== "NO") {
+      alert("Valor incorrecto. Ingrese SI o NO");
     }
-    if (validoInput == false) {
-      alert("Valor incorrecto! Ingrese SI o NO");
-    }
-  } while (!validoInput);
+  } while (papasInput !== "SI" && papasInput !== "NO");
+
+  const combo = new Combo(nombreInput, carneInput, cantidadInput, condimentosInput, papasInput);
+  combos.push(combo);
 
   // Mostrar el ticket en la consola
-  ticketEnConsola();
+  combo.mostrarTicket();
+};
 
-  // Incrementar el contador de combos
-  ++id;
-}
-// Función para calcular el precio total de un combo.
-// La haburguesa tiene un costo de 250 , cada carne vale 50 cada una y con las papas se adiciona 75.
-// Se resuelve utilizando la estructura de control selectiva : Switch 
+const mostrarTickets = () => {
+  console.log("--- Tickets de Pedido ---");
+  combos.forEach(combo => {
+    combo.mostrarTicket();
+  });
+  console.log("Gracias por su compra. ¡Hasta luego!");
+};
 
-function cacularPrecio() {
-  subTotal = 0;
-  switch (papasInput) {
-    case "SI":
-      subTotal = precioHamburguesa + cantidadInput * 50 + 75;
-      break;
-    case "NO":
-      subTotal = precioHamburguesa + cantidadInput * 50;
-      break;
-    default:
-      alert("Valor no validoo, ingrese SI o NO");
-  }
-  return subTotal;
-}
-// Función para mostrar el ticket del pedido en la consola
+const cantidadCombos = () => {
+  const cantidad = parseInt(prompt("¿Cuántos combos llevarás?"));
 
-function ticketEnConsola() {
-  // Mostrar el ticket en la consola
-  console.log("--- Ticket de Pedido console.log ---");
-  console.log("Cliente:", nombreInput);
-  console.log("Tipo de carne:", carneInput);
-  console.log("Cantidad de hamburguesas:", cantidadInput);
-  console.log("Condimentos:", condimentosInput);
-  console.log("Con papas fritas:", papasInput ? "Sí" : "No");
-  console.log("--- Fin pedido  ---", id);
-}
-
-// Función para solicitar la cantidad de combos y realizar los pedidos correspondientes. Al finalizar dice el total de la compra.
-// Se resuelve utilizando la estructura de control iterativa : for 
-
-function cantidadCombos() {
-  combos = parseInt(prompt("Cuantas combos llevarás?"));
-  for (let i = combos; i > 0; i--) {
+  for (let i = 0; i < cantidad; i++) {
     pedirDatos();
-    totalPedido = cacularPrecio() + totalPedido;
   }
-  if (combos == 0) {
-    console.log("Gracias por su visita, Seguramente la próxima te tentas !");
+
+  if (combos.length === 0) {
+    console.log("Gracias por su visita. ¡Seguramente la próxima te tentarás!");
   } else {
+    let totalPedido = combos.reduce((total, combo) => total + combo.subTotal, 0);
     console.log("---->>>>>>>  Costo total: ", totalPedido);
-    console.log("Gracias por su compra, hasta luego !");
+    mostrarTickets();
   }
-}
+};
 
-// BOTÓN QUE SOLO FUNCIONA PARA UN PEDIDO - EN PROCESO se buscó en internet como mostrar en html.
+cantidadCombos();
 
-function mostrarTicket() {
-  var ticketElement = document.getElementById("ticket");
-  ticketElement.innerHTML =
-    "<h2>Ticket de Pedido</h2>" +
-    "<p>Nombre: " +
-    nombreInput +
-    "</p>" +
-    "<p>Tipo de Carne: " +
-    carneInput +
-    "</p>" +
-    "<p>Cantidad de Hamburguesas: " +
-    cantidadInput +
-    "</p>" +
-    "<p>Condimentos: " +
-    condimentosInput +
-    "</p>" +
-    "<p>Papas Fritas: " +
-    papasInput +
-    "</p>" +
-    "<p>Subtotal: " +
-    totalPedido +
-    "</p>";
-}
+// BOTÓN QUE DOM .
+
+const mostrarTicket = () => {
+  const ticketElement = document.getElementById("ticket");
+  let ticketHTML = "<h2>Ticket de Pedido</h2>";
+
+  combos.forEach(combo => {
+    ticketHTML += `
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Cliente: ${combo.nombre}</h5>
+          <p class="card-text">Tipo de Carne: ${combo.carne}</p>
+          <p class="card-text">Cantidad de Hamburguesas: ${combo.cantidad}</p>
+          <p class="card-text">Condimentos: ${combo.condimentos}</p>
+          <p class="card-text">Papas Fritas: ${combo.papas}</p>
+          <p class="card-text">Subtotal: ${combo.subTotal}</p>
+        </div>
+      </div>
+    `;
+  });
+
+  ticketElement.innerHTML = ticketHTML;
+};
