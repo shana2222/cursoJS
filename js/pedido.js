@@ -1,108 +1,113 @@
-// Clase Combo
-class Combo {
-  constructor(nombre, carne, cantidad, condimentos, papas) {
-    this.nombre = nombre;
-    this.carne = carne;
-    this.cantidad = cantidad;
-    this.condimentos = condimentos;
-    this.papas = papas;
-    this.subTotal = this.calcularPrecio();
-  }
+// Obtenemos una referencia al elemento que contiene la lista de productos
+const productList = document.querySelector('#product-list');
+// Creamos un arreglo vacío para almacenar los productos
+let products = [];
 
-  calcularPrecio = () => {
-    const precioHamburguesa = 250;
-    const precioCarneExtra = 50;
-    const precioPapas = 75;
-
-    let subtotal = precioHamburguesa + this.cantidad * precioCarneExtra;
-    if (this.papas === "SI") {
-      subtotal += precioPapas;
+// Clase Producto
+class Producto {
+    constructor(name, description, price, quantity) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
     }
-
-    return subtotal;
-  };
-
-  mostrarTicket = () => {
-    console.log("--- Ticket de Pedido ---");
-    console.log("Cliente:", this.nombre);
-    console.log("Tipo de carne:", this.carne);
-    console.log("Cantidad de hamburguesas:", this.cantidad);
-    console.log("Condimentos:", this.condimentos);
-    console.log("Con papas fritas:", this.papas === "SI" ? "Sí" : "No");
-    console.log("--- Fin pedido ---");
-  };
 }
 
-// Variables del pedido
-let combos = [];
+// Función para agregar un nuevo producto
+function addProduct(name, description, price, quantity) {
+    // Creamos una nueva instancia de la clase Producto con los datos recibidos
+    const product = new Producto(name, description, price, quantity);
+    // Agregamos el producto al arreglo de productos
+    products.push(product);
+    // Guardamos los productos en el localStorage como un JSON
+    localStorage.setItem('products', JSON.stringify(products));
+    // Mostramos la lista de productos actualizada en la página
+    showProducts();
+}
 
-const pedirDatos = () => {
-  const nombreInput = prompt(`Ingrese el nombre del cliente para el combo ${combos.length + 1}`);
-  const carneInput = prompt("Ingrese el tipo de proteína que desea en la hamburguesa (250$)");
-  const cantidadInput = parseInt(prompt("Cuantas carnes desea en la hamburguesa. Cada carne tiene un extra de $50"));
-  const condimentosInput = prompt("Ingrese los condimentos deseados");
-  let papasInput;
+// Función para mostrar la lista de productos
+function showProducts() {
+    // Limpiamos el contenido del contenedor de la lista de productos
+    productList.innerHTML = '';
+    // Recorremos el arreglo de productos y creamos una card para cada uno
+    products.forEach((product, index) => {
+        const card = document.createElement('div');
+        card.classList.add('card', 'col-md-4');
+        // Creamos el contenido de la card con los datos del producto
+        card.innerHTML = `
+            <h4>${product.name}</h4>
+            <p>${product.description}</p>
+            <p>Precio: $${product.price}</p>
+            <div class="card-buttons">
+                <button class="btn decrement-quantity" onClick="decreaseQuantity(${index})">-</button>
+                <span>${product.quantity || 0}</span>
+                <button class="btn increment-quantity" onclick="incrementQuantity(${index})">+</button>
+                <button class="btn add-to-cart" onclick="addToCart(${index})">Agregar al Carrito</button>
+                <button class="btn delete-product" onclick="deleteProduct(${index})">Eliminar Producto</button>
+            </div>
+        `;
+        // Agregamos la card al contenedor de la lista de productos
+        productList.appendChild(card);
+    });
+}
 
-  do {
-    papasInput = prompt("¿Con papas fritas? (SI/NO)").toUpperCase();
-    if (papasInput !== "SI" && papasInput !== "NO") {
-      alert("Valor incorrecto. Ingrese SI o NO");
+// Función para aumentar la cantidad del producto
+function incrementQuantity(index) {
+    // Incrementamos la cantidad del producto en 1
+    products[index].quantity = (products[index].quantity || 0) + 1;
+    // Guardamos los productos actualizados en el localStorage
+    localStorage.setItem('products', JSON.stringify(products));
+    // Mostramos la lista de productos actualizada en la página
+    showProducts();
+}
+
+// Función para disminuir la cantidad del producto
+function decreaseQuantity(index) {
+    // Verificamos que la cantidad sea mayor que 0
+    if (products[index].quantity > 0) {
+        // Disminuimos la cantidad del producto en 1
+        products[index].quantity -= 1;
+        // Guardamos los productos actualizados en el localStorage
+        localStorage.setItem('products', JSON.stringify(products));
+        // Mostramos la lista de productos actualizada en la página
+        showProducts();
     }
-  } while (papasInput !== "SI" && papasInput !== "NO");
+}
 
-  const combo = new Combo(nombreInput, carneInput, cantidadInput, condimentosInput, papasInput);
-  combos.push(combo);
+// Función para eliminar un producto
+function deleteProduct(index) {
+    // Eliminamos el producto del arreglo usando splice
+    products.splice(index, 1);
+    // Guardamos los productos actualizados en el localStorage
+    localStorage.setItem('products', JSON.stringify(products));
+    // Mostramos la lista de productos actualizada en la página
+    showProducts();
+}
 
-  // Mostrar el ticket en la consola
-  combo.mostrarTicket();
-};
-
-const mostrarTickets = () => {
-  console.log("--- Tickets de Pedido ---");
-  combos.forEach(combo => {
-    combo.mostrarTicket();
-  });
-  console.log("Gracias por su compra. ¡Hasta luego!");
-};
-
-const cantidadCombos = () => {
-  const cantidad = parseInt(prompt("¿Cuántos combos llevarás?"));
-
-  for (let i = 0; i < cantidad; i++) {
-    pedirDatos();
-  }
-
-  if (combos.length === 0) {
-    console.log("Gracias por su visita. ¡Seguramente la próxima te tentarás!");
-  } else {
-    let totalPedido = combos.reduce((total, combo) => total + combo.subTotal, 0);
-    console.log("---->>>>>>>  Costo total: ", totalPedido);
-    mostrarTickets();
-  }
-};
-
-cantidadCombos();
-
-// BOTÓN QUE DOM .
-
-const mostrarTicket = () => {
-  const ticketElement = document.getElementById("ticket");
-  let ticketHTML = "<h2>Ticket de Pedido</h2>";
-
-  combos.forEach(combo => {
-    ticketHTML += `
-      <div class="card mb-4">
-        <div class="card-body">
-          <h5 class="card-title">Cliente: ${combo.nombre}</h5>
-          <p class="card-text">Tipo de Carne: ${combo.carne}</p>
-          <p class="card-text">Cantidad de Hamburguesas: ${combo.cantidad}</p>
-          <p class="card-text">Condimentos: ${combo.condimentos}</p>
-          <p class="card-text">Papas Fritas: ${combo.papas}</p>
-          <p class="card-text">Subtotal: ${combo.subTotal}</p>
-        </div>
-      </div>
-    `;
-  });
-
-  ticketElement.innerHTML = ticketHTML;
-};
+// Event listener para el evento DOMContentLoaded, que se dispara cuando la página ha cargado completamente
+document.addEventListener('DOMContentLoaded', function () {
+    // Obtenemos una referencia al formulario para agregar productos
+    const form = document.querySelector('#add-product-form');
+    if (form) {
+        // Agregamos un event listener para el evento submit del formulario
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Obtenemos los valores de los campos del formulario
+            const name = document.querySelector('#product-name').value;
+            const description = document.querySelector('#product-description').value;
+            const price = document.querySelector('#product-price').value;
+            // Agregamos el nuevo producto con cantidad 0 (por defecto)
+            addProduct(name, description, price, 0);
+            // Limpiamos el formulario
+            form.reset();
+        });
+    }
+    
+    // Verificamos si hay productos almacenados en el localStorage
+    if (localStorage.getItem('products')) {
+        // Si hay productos, los cargamos en el arreglo products
+        products = JSON.parse(localStorage.getItem('products'));
+    }
+    // Mostramos la lista de productos en la página
+    showProducts();
+});

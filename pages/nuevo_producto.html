@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Nuevo Producto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">Hamburguesas deliciosas</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Agregar Producto Nuevo</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./pedidos.html">Ver Productos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Carrito de Compra</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container containerForm mt-5">
+        <main>
+            <section>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <h2 class="mb-4">Agregar Nuevo Producto</h2>
+                        <form id="add-product-form">
+                            <div class="form-group">
+                                <label for="product-name">Nombre:</label>
+                                <input type="text" id="product-name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-description">Descripción:</label>
+                                <input type="text" id="product-description" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-price">Precio:</label>
+                                <input type="number" id="product-price" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="bg-dark text-white py-3">
+        <div class="container text-center">
+            &copy; 2023 Hamburguesas deliciosas. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script src="./../js/pedido.js"></script>
+</body>
+</html>
+
+
+

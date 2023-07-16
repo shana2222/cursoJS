@@ -1,151 +1,178 @@
-/* Estilos generales */
 body {
+  background-image: url('../assents/fondoIndex.png');
+  background-attachment: fixed;
+  background-size: cover;
+  color: #fff;
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
-main {
-  flex: 1;
-}
-
-
-/* Estilos del encabezado */
 header {
-  background-color: #f8f8f8;
-  padding: 20px;
   text-align: center;
 }
 
-h1 {
-  margin: 0;
+nav {
+  background-color: #333;
+  padding: 10px 0;
 }
 
 nav ul {
+  display: flex;
+  justify-content: center;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-nav ul li {
-  display: inline-block;
-  margin: 0 10px;
+nav li {
+  margin: 0 15px;
 }
 
-nav ul li a {
+.nav-link {
+  color: #ffffff;
   text-decoration: none;
-  color: #333;
 }
 
-/* Estilos de las especialidades */
-.specialties {
-  text-align: center;
-  padding: 20px;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
-.specialty {
-  display: inline-block;
-  width: 300px;
-  margin: 20px;
-}
-.specialty img {
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: 5px;
-}
-
-.specialty h3 {
-  font-size: 24px;
-  margin: 10px 0;
-}
-
-.specialty p {
-  margin-bottom: 10px;
-  color: #666;
-}
-
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #333;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-}
-
-
-/* Estilos del pie de página */
+/* Footer */
 footer {
   background-color: #333;
   color: #fff;
-  padding: 20px;
+  padding: 15px 0;
   text-align: center;
-  flex-shrink: 0;
-  
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
-button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-top: 20px;
-  background-color: #333;
-  color: #fff;
+/* Nuevos estilos para las cards */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+}
+
+.card {
+  background-color: #2C1A10;
+  border: 1px solid #684d29;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+/* Estilo para las columnas en pantallas mayores o iguales a 768px */
+@media (min-width: 768px) {
+  .col-md-4 {
+    -ms-flex: 0 0 100%; /* Modificamos el ancho de las columnas */
+    flex: 0 0 100%; /* Modificamos el ancho de las columnas */
+    max-width: 100%; /* Modificamos el ancho máximo de las columnas */
+  }
+}
+
+.card h4 {
+  margin-bottom: 10px;
+}
+
+.card p {
+  margin-bottom: 15px;
+}
+
+/* Estilos para los botones */
+.card-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-buttons span button {
+  padding: 2px 8px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-#ticket {
-  margin-top: 20px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.add-to-cart {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.increment-quantity {
+  background-color: #28a745;
+  color: #fff;
+}
+.decrement-quantity {
+  background-color: crimson;
+  color: #fff;
+}
+
+.delete-product {
+  background-color: crimson;
+  color: #fff;
+  margin-left: 5px;
 }
 
 
-
-/* Estilos adicionales para la sección tipo "card" */
-.card {
-  max-width: 800px;
-  margin: 0 auto;
-  background-color: #ffffff;
+/* Estilos generales para el formulario */
+#add-product-form {
+  background-color: darkgrey;
+  border: 1px solid #ced4da;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+}
+
+#add-product-form h2 {
   text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
+#add-product-form .form-group {
+  margin-bottom: 20px;
 }
 
-p {
-  margin-bottom: 10px;
+#add-product-form label {
+  font-weight: bold;
+  color: #666;
 }
 
-ul {
-  list-style: none;
-  padding-left: 20px;  
-  margin-bottom: 10px;
+#add-product-form input[type="text"],
+#add-product-form input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #333;
 }
 
-li {
-  margin-bottom: 5px;
+#add-product-form button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-ol {
-  margin: 0;
-  padding-left: 20px;
+#add-product-form button:hover {
+  background-color: #0056b3;
 }
 
+/* Estilo para centrar el formulario */
+.containerForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.containerForm main {
+  width: 100%;
+  max-width: 80%;
+}
