@@ -53,7 +53,6 @@ footer {
   width: 100%;
 }
 
-/* Nuevos estilos para las cards */
 .card-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -186,4 +185,28 @@ footer {
   border: 1px solid #ccc;
   padding: 1rem;
   margin-bottom: 1rem;
+}
+
+
+.container2 {
+  max-width: 50%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.page-description {
+  text-align: center;
+  color: #333;
+}
+
+.page-description h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.page-description p {
+  font-size: 16px;
 }
