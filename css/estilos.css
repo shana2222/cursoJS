@@ -4,10 +4,15 @@ body {
   background-size: cover;
   color: #fff;
   font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 header {
   text-align: center;
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
 }
 
 nav {
@@ -44,7 +49,6 @@ footer {
   color: #fff;
   padding: 15px 0;
   text-align: center;
-  position: absolute;
   bottom: 0;
   width: 100%;
 }
@@ -66,9 +70,9 @@ footer {
 /* Estilo para las columnas en pantallas mayores o iguales a 768px */
 @media (min-width: 768px) {
   .col-md-4 {
-    -ms-flex: 0 0 100%; /* Modificamos el ancho de las columnas */
-    flex: 0 0 100%; /* Modificamos el ancho de las columnas */
-    max-width: 100%; /* Modificamos el ancho máximo de las columnas */
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 }
 
@@ -102,6 +106,7 @@ footer {
   background-color: #28a745;
   color: #fff;
 }
+
 .decrement-quantity {
   background-color: crimson;
   color: #fff;
@@ -113,10 +118,9 @@ footer {
   margin-left: 5px;
 }
 
-
 /* Estilos generales para el formulario */
 #add-product-form {
-  background-color: darkgrey;
+  background-color: rgb(64, 62, 62);
   border: 1px solid #ced4da;
   border-radius: 10px;
   padding: 20px;
@@ -126,7 +130,7 @@ footer {
   text-align: center;
   font-size: 1.8rem;
   margin-bottom: 20px;
-  color: #333;
+  color: #e6e2e2;
 }
 
 #add-product-form .form-group {
@@ -135,7 +139,7 @@ footer {
 
 #add-product-form label {
   font-weight: bold;
-  color: #666;
+  color: #e08236;
 }
 
 #add-product-form input[type="text"],
@@ -154,7 +158,7 @@ footer {
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #833c06;
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
@@ -175,4 +179,11 @@ footer {
 .containerForm main {
   width: 100%;
   max-width: 80%;
+}
+
+.sale-card {
+  background-color: #895d07;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  margin-bottom: 1rem;
 }
